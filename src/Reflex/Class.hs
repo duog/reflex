@@ -3,7 +3,8 @@ module Reflex.Class where
 
 import Control.Applicative
 import Control.Monad.Identity hiding (mapM, mapM_, forM, forM_, sequence, sequence_)
-import Control.Monad.State.Strict hiding (mapM, mapM_, forM, forM_, sequence, sequence_)
+import Control.Monad.State.Strict as SS hiding (mapM, mapM_, forM, forM_, sequence, sequence_)
+import Control.Monad.State.Lazy as LS hiding (mapM, mapM_, forM, forM_, sequence, sequence_)
 import Control.Monad.Reader hiding (mapM, mapM_, forM, forM_, sequence, sequence_)
 import Control.Monad.Trans.Writer (WriterT())
 import Control.Monad.Trans.Except (ExceptT())
@@ -79,10 +80,16 @@ instance (MonadSample t m, Monoid r) => MonadSample t (WriterT r m) where
 instance (MonadHold t m, Monoid r) => MonadHold t (WriterT r m) where
   hold a0 = lift . hold a0
 
-instance MonadSample t m => MonadSample t (StateT s m) where
+instance MonadSample t m => MonadSample t (LS.StateT s m) where
   sample = lift . sample
 
-instance MonadHold t m => MonadHold t (StateT s m) where
+instance MonadSample t m => MonadSample t (SS.StateT s m) where
+  sample = lift . sample
+
+instance MonadHold t m => MonadHold t (LS.StateT s m) where
+  hold a0 = lift . hold a0
+
+instance MonadHold t m => MonadHold t (SS.StateT s m) where
   hold a0 = lift . hold a0
 
 instance MonadSample t m => MonadSample t (ExceptT e m) where
