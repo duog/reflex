@@ -117,12 +117,12 @@ Since MonadHold depends on MonadSample, any [S] function also runs in [H] contex
 [H]   toggle :: Bool -> Event a -> m (Dynamic Bool)
 
 -- Transform Dynamic to Dynamic using function
-[H]   forDyn  ::   Dynamic a ->  (a -> b) -> m (Dynamic b)
-[H]   mapDyn  :: (a ->    b) -> Dynamic a -> m (Dynamic b)
-[H]   mapDynM :: (a -> m' b) -> Dynamic a -> m (Dynamic b)
+[H]   forDyn   ::   Dynamic a ->  (a -> b) -> m (Dynamic b)
+[H]   mapDyn   :: (a ->    b) -> Dynamic a -> m (Dynamic b)
+[H]   mapDynM  :: (a -> m' b) -> Dynamic a -> m (Dynamic b)
       -- Note m' supplies [S] context
 [H]   splitDyn :: Dynamic (a, b) -> m (Dynamic a, Dynamic b)
-[H]   apDyn :: m (Dynamic (a -> b)) -> Dynamic t a -> m (Dynamic t b)
+[H]   apDyn    :: m (Dynamic (a -> b)) -> Dynamic a -> m (Dynamic b)
 
 -- Combine multiple Dynamics
 [H]   mconcatDyn :: Monoid a => [Dynamic a] -> m (Dynamic a)
