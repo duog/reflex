@@ -122,6 +122,7 @@ Since MonadHold depends on MonadSample, any [S] function also runs in [H] contex
 [H]   mapDynM :: (a -> m' b) -> Dynamic a -> m (Dynamic b)
       -- Note m' supplies [S] context
 [H]   splitDyn :: Dynamic (a, b) -> m (Dynamic a, Dynamic b)
+[H]   apDyn :: m (Dynamic (a -> b)) -> Dynamic t a -> m (Dynamic t b)
 
 -- Combine multiple Dynamics
 [H]   mconcatDyn :: Monoid a => [Dynamic a] -> m (Dynamic a)
